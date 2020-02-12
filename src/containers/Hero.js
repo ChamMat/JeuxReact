@@ -10,6 +10,7 @@ const mapStateToProps = (state) => (
   }
 );
 
+
 const mapDispatchToMainReducer = (dispatch) => ({
   newTimeFrame: (value) => {
     dispatch(timeFrame(value));
