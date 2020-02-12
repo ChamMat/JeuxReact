@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 import HeroStyled from './HeroStyled';
 import heroIdle from './sprite/idle/heroIdle';
+import heroWalk from './sprite/walk/heroWalk';
 
 
 const Hero = ({ datas, newTimeFrame }) => {
 
-  let heroData = {
+  const heroData = {
     index: datas.index,
     idle: datas.idle,
     walk: datas.walk,
@@ -19,31 +20,47 @@ const Hero = ({ datas, newTimeFrame }) => {
     compteAnimationTour: datas.compteAnimationTour,
   };
 
-  const imageSprite = heroIdle[heroData.index];
-  
-    //Ceci est un temporiseur afin que l'animation change tout les 7 tours
-  if (heroData.compteAnimationTour === 10) {
-    heroData.index += 1;
-    if (heroData.index === 4){
-      heroData.index = 0
+  let imageSprite = '';
+
+  // Ceci est un temporiseur afin que l'animation change tout les 7 tours
+  if (datas.idle) {
+    imageSprite = heroIdle[heroData.index];
+    if (heroData.compteAnimationTour === 10) {
+      heroData.index += 1;
+      if (heroData.index === 4) {
+        heroData.index = 0;
+      }
+      heroData.compteAnimationTour = 0;
+    }
   }
-    heroData.compteAnimationTour = 0;
+
+  if (datas.walk) {
+    imageSprite = heroWalk[heroData.index];
+    if (heroData.compteAnimationTour >= 5) {
+      heroData.index += 1;
+      if (heroData.index === 6) {
+        heroData.index = 0;
+      }
+      heroData.compteAnimationTour = 0;
+    }
   }
 
   const handleKeyup = (evt) => {
     if (evt.keyCode === 37 || evt.keyCode === 39) {
       heroData.walk = false;
       heroData.idle = true;
+      heroData.compteAnimationTour = 0;
+      heroData.index = 0;
     }
   };
 
   const handleKeyDown = (evt) => {
-    if (evt.keyCode === 37){
+    if (evt.keyCode === 37) {
       heroData.idle = false;
       heroData.walk = true;
       heroData.direction = -1;
     }
-    if (evt.keyCode === 39){
+    if (evt.keyCode === 39) {
       heroData.idle = false;
       heroData.walk = true;
       heroData.direction = 1;
@@ -53,11 +70,10 @@ const Hero = ({ datas, newTimeFrame }) => {
 
   const handleTimeFrame = () => {
     heroData.compteAnimationTour += 1;
-    if (heroData.walk){
-      heroData.posX +=  parseInt(5 * heroData.direction);
+    if (heroData.walk) {
+      heroData.posX += 5 * heroData.direction;
     }
 
-    console.log(heroData.posX);
     clearTimeout(handleTimeFrame);
     document.removeEventListener('keydown', handleKeyDown);
     document.removeEventListener('keyup', handleKeyup);
