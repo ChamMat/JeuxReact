@@ -10,8 +10,8 @@ const initialState = {
     idle: true,
     walk: false,
     direction: 1,
-    posX: '450',
-    posY: '315',
+    posX: 450,
+    posY: 315,
   },
 };
 
@@ -32,8 +32,8 @@ const appReducer = (state = initialState, action = {}) => {
           idle: action.herosDatas.idle,
           walk: action.herosDatas.walk,
           direction: action.herosDatas.direction,
-          posX: '450',
-          posY: '315',
+          posX: action.herosDatas.posX,
+          posY: action.herosDatas.posY,
         },
       };
     default:

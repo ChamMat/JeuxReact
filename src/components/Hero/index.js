@@ -53,9 +53,11 @@ const Hero = ({ datas, newTimeFrame }) => {
 
   const handleTimeFrame = () => {
     heroData.compteAnimationTour += 1;
+    if (heroData.walk){
+      heroData.posX +=  parseInt(5 * heroData.direction);
+    }
 
-
-
+    console.log(heroData.posX);
     clearTimeout(handleTimeFrame);
     document.removeEventListener('keydown', handleKeyDown);
     document.removeEventListener('keyup', handleKeyup);
