@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-import Hero from 'src/components/Hero';
+import Hero from 'src/containers/Hero';
 import AppStyled from './AppStyled';
 
 // == Import
@@ -11,9 +11,7 @@ const App = () => (
   <AppStyled className="app">
     <div className="montain">
       <div className="road">
-        <Hero
-          spriteIndexHeroIdle="1"
-        />
+        <Hero />
       </div>
     </div>
   </AppStyled>
