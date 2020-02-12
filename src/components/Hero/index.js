@@ -20,23 +20,53 @@ const Hero = ({ datas, newTimeFrame }) => {
   };
 
   const imageSprite = heroIdle[heroData.index];
-  if (heroData.index === 3) {
-    heroData.index = 0;
-  } else {
+  
     //Ceci est un temporiseur afin que l'animation change tout les 7 tours
-    if (heroData.compteAnimationTour === 7) {
-      heroData.index += 1;
-      heroData.compteAnimationTour = 0;
-    }
+  if (heroData.compteAnimationTour === 10) {
+    heroData.index += 1;
+    if (heroData.index === 4){
+      heroData.index = 0
   }
+    heroData.compteAnimationTour = 0;
+  }
+
+  const handleKeyup = (evt) => {
+    if (evt.keyCode === 37 || evt.keyCode === 39) {
+      heroData.walk = false;
+      heroData.idle = true;
+    }
+  };
+
+  const handleKeyDown = (evt) => {
+    if (evt.keyCode === 37){
+      heroData.idle = false;
+      heroData.walk = true;
+      heroData.direction = -1;
+    }
+    if (evt.keyCode === 39){
+      heroData.idle = false;
+      heroData.walk = true;
+      heroData.direction = 1;
+    }
+  };
+
 
   const handleTimeFrame = () => {
     heroData.compteAnimationTour += 1;
+
+
+
     clearTimeout(handleTimeFrame);
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('keyup', handleKeyup);
+
     newTimeFrame(
       heroData,
     );
   };
+
+  document.addEventListener('keydown', handleKeyDown);
+  document.addEventListener('keyup', handleKeyup);
 
   setTimeout(handleTimeFrame, 20);
 
@@ -49,6 +79,7 @@ const Hero = ({ datas, newTimeFrame }) => {
       posY={datas.posY}
       width={datas.width}
       height={datas.height}
+      direction={datas.direction}
     />
   );
 };

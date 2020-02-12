@@ -9,6 +9,7 @@ const HeroStyled = styled.div`
   position:absolute;
   top: ${(props) => props.posY}px;
   left: ${(props) => props.posX}px;
+  transform: scaleX(${(props) => props.direction});
 `;
 
 

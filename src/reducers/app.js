@@ -9,7 +9,7 @@ const initialState = {
     index: 0,
     idle: true,
     walk: false,
-    direction: 'right',
+    direction: 1,
     posX: '450',
     posY: '315',
   },
@@ -18,7 +18,10 @@ const initialState = {
 const appReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case TIME_FRAME:
-      console.log(action);
+      // console.log('idle = ' + action.herosDatas.idle);
+      // console.log('walk = ' + action.herosDatas.walk);
+      // console.log('');
+
       return {
         ...state,
         hero: {
@@ -26,9 +29,9 @@ const appReducer = (state = initialState, action = {}) => {
           width: '32',
           height: '32',
           index: action.herosDatas.index,
-          idle: true,
-          walk: false,
-          direction: 'right',
+          idle: action.herosDatas.idle,
+          walk: action.herosDatas.walk,
+          direction: action.herosDatas.direction,
           posX: '450',
           posY: '315',
         },
